@@ -28,4 +28,12 @@ public class StringOperationTest {
 		assertTrue(StringOperations.normalizeSpace("   Test   ").equals("Test"));
 		assertTrue(StringOperations.normalizeSpace("   JOHN   SNOW    ").equals("JOHN SNOW"));
 	}
+	
+	@Test
+	public void mimeType()
+	{
+		assertTrue(StringOperations.getMimeType("A.cpp").equals("cpp"));
+		assertTrue(StringOperations.getMimeType("A.h").equals("h"));
+		assertTrue(StringOperations.getMimeType("A").equals(""));
+	}
 }

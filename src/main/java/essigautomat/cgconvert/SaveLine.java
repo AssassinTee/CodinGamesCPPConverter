@@ -1,5 +1,9 @@
 package essigautomat.cgconvert;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 public class SaveLine {
@@ -9,7 +13,7 @@ public class SaveLine {
 	public static final int MAIN = 0;
 	public static final int KLASSDEF = 2;
 	//public static final int KLASSDEK = 3;
-	public static final int INCLUDE = 4;
+	//public static final int INCLUDE = 4;
 	private HashSet<String> includes = new HashSet<String>();
 	private HashSet<String> fileIncludes = null;
 	private HashSet<String> classDekl = new HashSet<String>();
@@ -25,9 +29,13 @@ public class SaveLine {
 		}
 	}
 	
-	public void addFileNames(String s[])
+	public void addFileNames(List<File> files)
 	{
-		fileIncludes = new HashSet<String>(Arrays.asList(s));
+		fileIncludes = new HashSet<String>();
+		for(File f : files)
+		{
+			fileIncludes.add(f.getName());
+		}
 	}
 	
 	public void addInclude(String s)
@@ -50,7 +58,34 @@ public class SaveLine {
 	}
 	
 	public void write() {
-		// TODO this;
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter("all-in-one.cpp", "UTF-8");
+			for(String include : includes)
+			{
+				writer.println("#include "+include);
+			}
+			for(String classdekl : classDekl)
+			{
+				writer.println("class "+classdekl+";");
+			}
+			for(int i = NUM_LEVEL-1; i >= 0; --i)
+			{
+				for(String str : build.get(i)) {
+					writer.println(str);
+				}
+			}
+			writer.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.err.println("Could not create output file!");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.err.println("Your java does not support UTF-8?!");
+		}
+
 	}
 	
 	public static String erode(String s, char firstchar)

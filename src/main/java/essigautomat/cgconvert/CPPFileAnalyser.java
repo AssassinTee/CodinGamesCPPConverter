@@ -9,31 +9,29 @@ public class CPPFileAnalyser {
 	// Behaviour tree for line analysis
 	private List<LineBehaviour> behaviourlist;
 
-	public CPPFileAnalyser(String filenames[]) {
+	public CPPFileAnalyser(List<File> files) {
 		behaviourlist = new ArrayList<LineBehaviour>();
 		behaviourlist.add(new LineMakroInclude());
 		behaviourlist.add(new LineMakroConverter());
 		behaviourlist.add(new LineDefault());
 
 		// Analyse each file
-		SaveLine.get().addFileNames(filenames);
-		for (String filename : filenames) {
-			analyseFile(filename);
+		SaveLine.get().addFileNames(files);
+		for (File f : files) {
+			analyseFile(f);
 		}
 	}
 
-	public void analyseFile(String filename) {
+	public void analyseFile(File file) {
 		// Find out mimetype, can this be a cpp file?
-		String mime = StringOperations.getMimeType(filename);
+		String mime = StringOperations.getMimeType(file.getName());
 
 		if (!mime.equals("h") && !mime.equals("cpp")) {
-			System.err.println("The file with mimetype '" + mime + "' is not supported!");
+			System.err.println("File '"+file.getName()+"' with mimetype '" + mime + "' is not supported!");
 			return;
 		}
 
 		InfoSubscriber info = new InfoSubscriber(mime.equals("h"));
-		File file = new File(filename);
-
 		//Read File
 		try {
 			Scanner sc = new Scanner(file);
@@ -45,7 +43,7 @@ public class CPPFileAnalyser {
 			sc.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			System.err.println("could not read File '" + filename + "'");
+			System.err.println("could not read File '" +file.getName() + "'");
 		}
 	}
 
@@ -61,8 +59,7 @@ public class CPPFileAnalyser {
 	}
 
 	public void toPath(String string) {
-		// TODO Auto-generated method stub
-
+		SaveLine.get().write();
 	}
 
 	public void toClipboard() {
