@@ -1,5 +1,7 @@
 package essigautomat.cgconvert;
 
+import java.util.regex.Pattern;
+
 import org.apache.commons.lang.StringUtils;
 
 /**Collection of weird string operations
@@ -20,7 +22,7 @@ public class StringOperations {
 	
 	public static String getMimeType(String s)
 	{
-		String lst[] = s.split(".");
+		String lst[] = s.split("\\.");//<-- fuck you java
 		if(lst.length != 2)
 			return "";
 		return lst[1].trim();
