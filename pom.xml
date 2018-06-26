@@ -13,6 +13,53 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  
+  <repositories>
+    <repository>
+      <id>my-repo1</id>
+      <name>your custom repo</name>
+      <url>https://mvnrepository.com/artifact/commons-lang/commons-lang</url>
+    </repository>
+  </repositories>
+  
+  <build>
+	<plugins>
+	  <plugin>
+	    <artifactId>maven-jar-plugin</artifactId>
+	    <configuration>
+	      <archive>
+	        <manifest>
+	          <mainClass>essigautomat.cgconvert.Main</mainClass>
+	        </manifest>
+	      </archive>
+	      <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+	    </configuration>
+	  </plugin>
+	  <plugin>
+	    <artifactId>maven-assembly-plugin</artifactId>
+	    <configuration>
+	      <archive>
+	        <manifest>
+	          <mainClass>fully.qualified.MainClass</mainClass>
+	        </manifest>
+	      </archive>
+	      <descriptorRefs>
+	        <descriptorRef>jar-with-dependencies</descriptorRef>
+	      </descriptorRefs>
+	    </configuration>
+	    <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+	  </plugin>
+	</plugins>
+  </build>
 
   <dependencies>
     <dependency>
