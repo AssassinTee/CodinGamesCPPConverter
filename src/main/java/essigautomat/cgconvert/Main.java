@@ -3,17 +3,48 @@ package essigautomat.cgconvert;
 import java.io.File;
 import java.util.*;
 
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
+import org.kohsuke.args4j.Option;
+
 public class Main {
+	//Reqired options
+	@Option(name="-i", aliases="--input", usage="input directory", required=true)
+	private String inputDir;
+	
+	@Option(name="-o", aliases="--output", usage="output directory")
+	private String outputDir = null;
+	
+	@Option(name="-m", aliases="--mode", usage="converter mode: 'default', 'debug' or 'shortest'")
+	private String mode = "default";//default argument is default ... lol
 	public static void main(String args[])
 	{
-		if(args.length != 1)
+		new Main().doMain(args);
+	}
+	
+	public void doMain(String args[])
+	{
+		final CmdLineParser parser = new CmdLineParser(this);
+		if(args.length < 1)
 		{
-			System.err.println("Wrong number of arguments");
+			parser.printUsage(System.out);
 			System.exit(1);
 		}
-		List<File> files = getProjectContents(args[0]);
+		try
+		{
+			parser.parseArgument(args);
+		}
+		catch(CmdLineException clex)
+		{
+			System.err.println("ERROR: Unable to parse command-line options: " + clex);
+		}
+		if(mode.equals("debug"))
+		{
+			System.out.println("input directory '"+inputDir+"' and Mode '"+mode.toLowerCase()+"'provided");
+		}
+		List<File> files = getProjectContents(inputDir);
 		CPPFileAnalyser ana = new CPPFileAnalyser(files);
-		ana.toPath("blub");
+		ana.toPath(SaveLine.toMode(mode));
 		ana.toClipboard();
 	}
 	
