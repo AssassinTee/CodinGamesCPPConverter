@@ -61,7 +61,7 @@ public class CPPFileAnalyser {
 	}
 
 	public void toPath(String string) {
-		SaveLine.get().write();
+		SaveLine.get().write(SaveLine.Mode.DEBUG);
 	}
 
 	public void toClipboard() {
