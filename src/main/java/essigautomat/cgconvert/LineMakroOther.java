@@ -11,6 +11,12 @@ public class LineMakroOther extends LineBehaviour{
 	public boolean execute(String line, String convline, InfoSubscriber info) {
 		if(convline.equals("#pragma once"))//Handle include guard
 			return true;
+		String args[] = convline.split(" ");
+		if(args.length >= 2 && args[0].equals("#pragma"))
+		{
+			SaveLine.get().addGlobalPragma(convline);
+			return true;
+		}
 		return false;
 	}
 
