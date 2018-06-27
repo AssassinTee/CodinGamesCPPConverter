@@ -13,7 +13,7 @@ public class LineDefault extends LineBehaviour {
 		if(info.isHeader())
 			SaveLine.get().saveLevel(line, SaveLine.KLASSDEF);
 		else
-			SaveLine.get().saveLevel(convline, SaveLine.DEFAULT);
+			SaveLine.get().saveLevel(line, SaveLine.DEFAULT);
 		return true;
 	}
 
