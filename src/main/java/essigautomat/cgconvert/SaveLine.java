@@ -71,7 +71,17 @@ public class SaveLine {
 			}
 			for(int i = NUM_LEVEL-1; i >= 0; --i)
 			{
+				boolean isEmpty = false;
 				for(String str : build.get(i)) {
+					//Only print one empty line in a row!
+					if(str.length() == 0)
+					{
+						if(isEmpty)
+							continue;
+						isEmpty=true;
+					}
+					else
+						isEmpty=false;
 					writer.println(str);
 				}
 			}
