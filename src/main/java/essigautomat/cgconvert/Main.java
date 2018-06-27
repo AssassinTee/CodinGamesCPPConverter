@@ -52,8 +52,8 @@ public class Main {
 			}
 		}
 		List<File> files = getProjectContents(inputDir);
-		CPPFileAnalyser ana = new CPPFileAnalyser(files);
-		ana.toPath(SaveLine.toMode(mode), outputDir);
+		CPPFileAnalyser ana = new CPPFileAnalyser(files, SaveLine.toMode(mode));
+		ana.toPath(outputDir);
 		ana.toClipboard();
 	}
 	

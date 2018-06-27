@@ -10,7 +10,7 @@ import org.apache.commons.lang.StringUtils;
 public class StringOperations {	
 	public static String removeSyntaxChars(String s)
 	{
-		return StringUtils.replaceChars(s, "{}; ", "");
+		return StringUtils.replaceChars(s, "{};: ", "");
 	}
 	
 	public static String removeQuotationMarks(String s)
@@ -58,5 +58,27 @@ public class StringOperations {
 		{
 			return lst[1].charAt(lst[1].length()-1) == ';';
 		}
+	}
+	
+	public static String removeComment(String s)
+	{
+		if(s.length() < 2)
+			return s;
+		if(s.substring(0, 2).equals("//") || s.substring(0, 2).equals("/*"))
+			return "";
+		String args[] = StringUtils.splitByWholeSeparator(s, "//");
+		String args2[] = StringUtils.splitByWholeSeparator(args[0], "/*");
+		System.out.println(args2[0]);
+		return args2[0];
+	}
+	
+	public static String removeSingleComment(String s)
+	{
+		if(s.length() < 2)
+			return s;
+		if(s.substring(0, 2).equals("//"))
+			return "";
+		String args[] = StringUtils.splitByWholeSeparator(s, "//");
+		return args[0];
 	}
 }
