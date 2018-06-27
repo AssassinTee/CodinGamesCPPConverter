@@ -38,10 +38,13 @@ public class SaveLine {
 		}
 	}
 	
-	public void addInclude(String s)
+	public boolean addInclude(String s)
 	{
-		if(fileIncludes == null || !fileIncludes.contains(erode(s, '"')))
+		if(fileIncludes == null || !fileIncludes.contains(StringOperations.removeQuotationMarks(s))) {
 			includes.add(s);
+			return true;
+		}
+		return false;
 	}
 	
 	public void addClassDekl(String s)
@@ -96,13 +99,5 @@ public class SaveLine {
 			System.err.println("Your java does not support UTF-8?!");
 		}
 
-	}
-	
-	public static String erode(String s, char firstchar)
-	{
-		String ret = s;
-		if(s.length() >= 3 &&  s.charAt(0) == firstchar)
-			ret = s.substring(1, s.length()-2);
-		return ret;
 	}
 }
