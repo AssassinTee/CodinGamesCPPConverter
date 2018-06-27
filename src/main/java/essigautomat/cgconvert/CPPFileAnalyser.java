@@ -60,8 +60,8 @@ public class CPPFileAnalyser {
 
 	}
 
-	public void toPath(String string) {
-		SaveLine.get().write(SaveLine.Mode.DEBUG);
+	public void toPath(SaveLine.Mode m) {
+		SaveLine.get().write(m);
 	}
 
 	public void toClipboard() {

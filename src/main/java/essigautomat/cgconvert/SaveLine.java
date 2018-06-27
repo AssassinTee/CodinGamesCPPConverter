@@ -128,4 +128,13 @@ public class SaveLine {
 		writer.println("*/");
 		
 	}
+
+	public static Mode toMode(String mode) {
+		switch(mode.toLowerCase())
+		{
+		case "debug": return Mode.DEBUG;
+		case "shortest": return Mode.SHORTEST;
+		default: return Mode.DEFAULT;
+		}
+	}
 }
