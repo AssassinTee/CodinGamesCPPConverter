@@ -11,5 +11,5 @@ int A::getY() {
 int main(int argc, char* test[])
 {
     A a(5);
-    std::cout << a.getY() << endl;
+    std::cout << a.getY() << std::endl;
 }
