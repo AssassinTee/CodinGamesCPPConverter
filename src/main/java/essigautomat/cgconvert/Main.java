@@ -42,9 +42,18 @@ public class Main {
 		{
 			System.out.println("input directory '"+inputDir+"' and Mode '"+mode.toLowerCase()+"'provided");
 		}
+		if(outputDir != null)
+		{
+			File f = new File(outputDir);
+			if(!f.isDirectory())
+			{
+				System.err.println("'"+outputDir+"' is not a directory!");
+				System.exit(1);
+			}
+		}
 		List<File> files = getProjectContents(inputDir);
 		CPPFileAnalyser ana = new CPPFileAnalyser(files);
-		ana.toPath(SaveLine.toMode(mode));
+		ana.toPath(SaveLine.toMode(mode), outputDir);
 		ana.toClipboard();
 	}
 	
