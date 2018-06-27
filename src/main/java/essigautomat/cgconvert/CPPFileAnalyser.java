@@ -11,9 +11,11 @@ public class CPPFileAnalyser {
 
 	public CPPFileAnalyser(List<File> files) {
 		behaviourlist = new ArrayList<LineBehaviour>();
-		behaviourlist.add(new LineMakroInclude());
-		behaviourlist.add(new LineMakroConverter());
-		behaviourlist.add(new LineDefault());
+		behaviourlist.add(new LineMakroInclude());//collect all includes
+		behaviourlist.add(new LineMakroConverter());//collect all converter makros
+		behaviourlist.add(new LineMakroOther());//collect other makros
+		behaviourlist.add(new LineKlassDekl());//collect all class dekl/def
+		behaviourlist.add(new LineDefault());//collect rest
 
 		// Analyse each file
 		SaveLine.get().addFileNames(files);
