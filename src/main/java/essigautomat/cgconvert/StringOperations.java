@@ -1,7 +1,5 @@
 package essigautomat.cgconvert;
 
-import java.util.regex.Pattern;
-
 import org.apache.commons.lang.StringUtils;
 
 /**Collection of weird string operations
@@ -38,7 +36,7 @@ public class StringOperations {
 		return StringUtils.normalizeSpace(s);
 	}
 	
-	public static boolean isKlassDef(String s)
+	public static boolean isKlassDefOrDek(String s)
 	{
 		String lst[] = s.split(" ");
 		if(lst.length >= 2)
@@ -46,5 +44,19 @@ public class StringOperations {
 			return lst[0].equals("class");
 		}
 		return false;
+	}
+
+	public static boolean isKlassDekl(String s) {
+		String lst[] = s.split(" ");
+		if(lst.length < 2 || !lst[0].equals("class"))
+			return false;//can't tell, maybe next line :C
+		if(lst.length >= 3)
+		{
+			return lst[1].charAt(lst[1].length()-1) == ';' || lst[2].charAt(0) == ';';
+		}
+		else //if(lst.length == 2)
+		{
+			return lst[1].charAt(lst[1].length()-1) == ';';
+		}
 	}
 }
