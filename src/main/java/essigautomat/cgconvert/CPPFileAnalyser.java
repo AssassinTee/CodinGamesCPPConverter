@@ -8,15 +8,16 @@ public class CPPFileAnalyser {
 
 	// Behaviour tree for line analysis
 	private List<LineBehaviour> behaviourlist;
-
-	public CPPFileAnalyser(List<File> files) {
+	private SaveLine.Mode mode;
+	public CPPFileAnalyser(List<File> files, SaveLine.Mode m) {
 		behaviourlist = new ArrayList<LineBehaviour>();
 		behaviourlist.add(new LineMakroInclude());//collect all includes
 		behaviourlist.add(new LineMakroConverter());//collect all converter makros
 		behaviourlist.add(new LineMakroOther());//collect other makros
 		behaviourlist.add(new LineKlassDekl());//collect all class dekl/def
 		behaviourlist.add(new LineDefault());//collect rest
-
+		
+		mode = m;
 		// Analyse each file
 		SaveLine.get().addFileNames(files);
 		for (File f : files) {
@@ -51,6 +52,8 @@ public class CPPFileAnalyser {
 
 	private void readLine(String line, InfoSubscriber info) {
 		String convline = StringOperations.normalizeSpace(line);
+		if(mode == SaveLine.Mode.SHORTEST)
+			convline = StringOperations.removeSingleComment(convline);
 		for (LineBehaviour lb : behaviourlist) {
 			if (lb.isPossible(line, convline, info)) {
 				if (lb.execute(line, convline, info))
@@ -60,8 +63,8 @@ public class CPPFileAnalyser {
 
 	}
 
-	public void toPath(SaveLine.Mode m, String outputDir) {
-		SaveLine.get().write(m, outputDir);
+	public void toPath(String outputDir) {
+		SaveLine.get().write(mode, outputDir);
 	}
 
 	public void toClipboard() {
