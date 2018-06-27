@@ -65,10 +65,22 @@ public class SaveLine {
 		build.get(level).add(s);
 	}
 	
-	public void write(Mode m) {
+	public void write(Mode m, String outputDir) {
+		//format outputDir
+		String outputFile = "all-in-one.cpp";
+		if(outputDir != null && outputDir.length() != 0)
+		{
+			if(outputDir.charAt(outputDir.length()-1) != '/');
+				outputDir = outputDir+"/";
+			outputFile = outputDir+outputFile;
+		}
+			
+		
 		PrintWriter writer;
 		try {
-			writer = new PrintWriter("all-in-one.cpp", "UTF-8");
+			
+				
+			writer = new PrintWriter(outputFile, "UTF-8");
 			if(m != Mode.SHORTEST)
 				writeInfo(writer, m);
 			if(m == Mode.DEBUG)
