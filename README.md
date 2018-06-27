@@ -6,7 +6,7 @@ These instructions will help you to set up the project and convert your own CPP-
 
 ### Prerequisites
 
-What you need to install and run this CGC:
+What you need to install and run CGC:
 
 ```
 Java 8 JKD
