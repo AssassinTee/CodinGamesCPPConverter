@@ -21,14 +21,31 @@ mvn clean install
 mvn build package
 ```
 Now you can find a jar-with-dependencies under the **target** directory.
-Run the jar with
+### Running
+After installing and building the package you can run CGC.
+You can see the options like this:
 ```
-java -jar target/cgconvert-YOURVERSION-jar-with-dependencies.jar myprojectrootdirectory
+java -jar target/cgconvert-YOURVERSION-jar-with-dependencies.jar
 ```
-This project includes some **examples**:
+Options (in german locale):
 ```
-java -jar target/cgconvert-YOURVERSION-jar-with-dependencies.jar examples/example1/
+ -i (--input) WERT  : input directory
+ -m (--mode) WERT   : converter mode: 'default', 'debug' or 'shortest'
+                      (Vorgabe: default)
+ -o (--output) WERT : output directory
 ```
+
+Modes:
+* Default: 	Converts Code, allows empty lines and **doesn't add** debug **comments** to the converted code.
+* Debug: 	Converts Code, allows empty lines and **adds** debug information to the converted code.
+* Shortest:	Converts Code, skips empty lines and **doesn't add** any comments. It also removes any whitespaces and tabs that aren't necessary!
+
+This project includes some **examples**.
+Example for project example1:
+```
+java -jar target/cgconvert-YOURVERSION-jar-with-dependencies.jar -i examples/example1/ -m debug
+```
+
 
 ## Running the tests
 
