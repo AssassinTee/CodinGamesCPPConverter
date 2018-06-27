@@ -7,6 +7,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 public class SaveLine {
+	enum Mode {
+		DEFAULT,
+		DEBUG,
+		SHORTEST,
+	}
 	static SaveLine saveline = new SaveLine();
 	public static final int NUM_LEVEL = 5;
 	public static final int DEFAULT = 1;
@@ -60,26 +65,36 @@ public class SaveLine {
 		build.get(level).add(s);
 	}
 	
-	public void write() {
+	public void write(Mode m) {
 		PrintWriter writer;
 		try {
 			writer = new PrintWriter("all-in-one.cpp", "UTF-8");
+			if(m != Mode.SHORTEST)
+				writeInfo(writer, m);
+			if(m == Mode.DEBUG)
+				writer.println("//cgconv: include files");
 			for(String include : includes)
 			{
 				writer.println("#include "+include);
 			}
+			if(m == Mode.DEBUG)
+				writer.println("//cgconv: deklare ALL classes");
 			for(String classdekl : classDekl)
 			{
 				writer.println("class "+classdekl+";");
 			}
+			if(m == Mode.DEBUG)
+				writer.println("//cgconv: define rest (in priority order)");
 			for(int i = NUM_LEVEL-1; i >= 0; --i)
 			{
 				boolean isEmpty = false;
 				for(String str : build.get(i)) {
 					//Only print one empty line in a row!
+					if(m == Mode.SHORTEST)
+						str = StringOperations.normalizeSpace(str);
 					if(str.length() == 0)
 					{
-						if(isEmpty)
+						if(isEmpty || m == Mode.SHORTEST)
 							continue;
 						isEmpty=true;
 					}
@@ -98,6 +113,19 @@ public class SaveLine {
 			e.printStackTrace();
 			System.err.println("Your java does not support UTF-8?!");
 		}
-
+	}
+	
+	private void writeInfo(PrintWriter writer, Mode m)
+	{
+		writer.println("/** Converted project into one File with CGConvert (CGC).");
+		writer.println("*   CGC is made by Essigautomat");
+		writer.println("*   https://github.com/AssassinTee/CodinGamesCPPConverter");
+		writer.println("*   CGC runs under the GPL v3! You are free to change what you want");
+		if(m == Mode.DEBUG)
+			writer.println("*   Converter Mode: DEBUG");
+		else if(m == Mode.DEFAULT)
+			writer.println("*   Converter Mode: DEFAULT");
+		writer.println("*/");
+		
 	}
 }
