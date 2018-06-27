@@ -36,9 +36,9 @@ Options (in german locale):
 ```
 
 Modes:
-* Default: 	Converts Code, allows empty lines and **doesn't add** debug **comments** to the converted code.
-* Debug: 	Converts Code, allows empty lines and **adds** debug information to the converted code.
-* Shortest:	Converts Code, skips empty lines and **doesn't add** any comments. It also removes any whitespaces and tabs that aren't necessary!
+* **Default**: 	Converts Code, allows empty lines and **doesn't add** debug **comments** to the converted code.
+* **Debug**: 	Converts Code, allows empty lines and **adds** debug information to the converted code.
+* **Shortest**:	Converts Code, skips empty lines and **doesn't add** any comments. It also removes any whitespaces and tabs that aren't necessary!
 
 This project includes some **examples**.
 Example for project example1:
