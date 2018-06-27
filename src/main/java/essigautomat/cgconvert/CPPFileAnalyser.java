@@ -37,7 +37,7 @@ public class CPPFileAnalyser {
 			Scanner sc = new Scanner(file);
 
 			while (sc.hasNextLine()) {
-				String line = sc.next();
+				String line = sc.nextLine();
 				readLine(line, info);
 			}
 			sc.close();
