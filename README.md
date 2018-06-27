@@ -54,7 +54,7 @@ CGC won't give you any warranty, that your project is converted right and your c
 
 You can run tests by hand with
 ```
-java -jar target/cgconvert-YOURVERSION-jar-with-dependencies.jar examples/example1/
+java -jar target/cgconvert-YOURVERSION-jar-with-dependencies.jar -i examples/example1/
 ```
 You can find more examples under the **examples** directory.
 
