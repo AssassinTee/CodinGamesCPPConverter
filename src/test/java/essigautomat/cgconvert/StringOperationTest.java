@@ -9,6 +9,7 @@ public class StringOperationTest {
 		assertTrue(StringOperations.removeSyntaxChars("class weird{").equals("classweird"));
 		assertTrue(StringOperations.removeSyntaxChars("{ A;").equals("A"));
 		assertTrue(StringOperations.removeSyntaxChars("move(){};").equals("move()"));
+		assertTrue(StringOperations.removeSyntaxChars("A:").equals("A"));
 	}
 	
 	@Test
@@ -35,5 +36,20 @@ public class StringOperationTest {
 		assertTrue(StringOperations.getMimeType("A.cpp").equals("cpp"));
 		assertTrue(StringOperations.getMimeType("A.h").equals("h"));
 		assertTrue(StringOperations.getMimeType("A").equals(""));
+	}
+	
+	@Test
+	public void removeComment()
+	{
+		assertTrue(StringOperations.removeComment("class A//bullshit").equals("class A"));
+		assertTrue(StringOperations.removeComment("class A//bull//shit").equals("class A"));
+		assertTrue(StringOperations.removeComment("class A/*bullshit*/").equals("class A"));
+		assertTrue(StringOperations.removeComment("class A/*bullshit").equals("class A"));
+		assertTrue(StringOperations.removeComment("class A").equals("class A"));
+		assertTrue(StringOperations.removeComment("//bullshit").equals(""));
+		assertTrue(StringOperations.removeComment("/* bullshit */").equals(""));
+		assertTrue(StringOperations.removeComment("A/* bullshit */").equals("A"));
+		assertTrue(StringOperations.removeComment("A// bullshit */").equals("A"));
+		assertTrue(StringOperations.removeComment("A").equals("A"));
 	}
 }

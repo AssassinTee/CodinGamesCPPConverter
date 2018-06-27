@@ -37,7 +37,7 @@ public class LineBehaviourTest {
 		assertEquals(ld.isPossible("egal", "include \"irgendwas.h\"", null), false);
 		
 		assertEquals(ld.isPossible("egal", "#include", null), false);
-		assertEquals(ld.isPossible("egal", "#include \"a\" <b>", null), false);
+		assertEquals(ld.isPossible("egal", "#include \"a\" //a.magic()", null), true);
 		
 		assertEquals(ld.execute(null, "#include \"irgendwas.h\"", null), true);
 	}
