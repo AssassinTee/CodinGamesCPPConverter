@@ -22,6 +22,7 @@ public class SaveLine {
 	private HashSet<String> includes = new HashSet<String>();
 	private HashSet<String> fileIncludes = null;
 	private HashSet<String> classDekl = new HashSet<String>();
+	private HashSet<String> globalMakros = new HashSet<String>();
 	private List<List<String>> build = new ArrayList<List<String>>();
 
 	public static SaveLine get() {
@@ -74,7 +75,6 @@ public class SaveLine {
 				outputDir = outputDir+"/";
 			outputFile = outputDir+outputFile;
 		}
-			
 		
 		PrintWriter writer;
 		try {
@@ -83,13 +83,19 @@ public class SaveLine {
 			writer = new PrintWriter(outputFile, "UTF-8");
 			if(m != Mode.SHORTEST)
 				writeInfo(writer, m);
+			if(m == Mode.DEBUG && globalMakros.size() != 0)
+				writer.println("//cgconv: global Makros");
+			for(String makro : globalMakros)
+			{
+				writer.println(makro);
+			}
 			if(m == Mode.DEBUG)
 				writer.println("//cgconv: include files");
 			for(String include : includes)
 			{
 				writer.println("#include "+include);
 			}
-			if(m == Mode.DEBUG)
+			if(m == Mode.DEBUG && classDekl.size() != 0)
 				writer.println("//cgconv: deklare ALL classes");
 			for(String classdekl : classDekl)
 			{
@@ -148,5 +154,9 @@ public class SaveLine {
 		case "shortest": return Mode.SHORTEST;
 		default: return Mode.DEFAULT;
 		}
+	}
+
+	public void addGlobalPragma(String convline) {
+		globalMakros.add(convline);
 	}
 }
