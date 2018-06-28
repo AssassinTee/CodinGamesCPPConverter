@@ -69,4 +69,9 @@ public class CPPFileAnalyser {
 			sb = new StringBuilder();
 		SaveLine.get().write(mode, outputDir, sb);
 	}
+
+	public void toClipboard() {
+		SaveLine.get().toClipboard();
+		
+	}
 }
