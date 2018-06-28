@@ -58,6 +58,7 @@ public class Main {
 		List<File> files = getProjectContents(inputDir);
 		CPPFileAnalyser ana = new CPPFileAnalyser(files, SaveLine.toMode(mode));
 		ana.toPath(outputDir, toClipboard);
+		ana.toClipboard();
 	}
 	
 	public static List<File> getProjectContents(String projectDir)
