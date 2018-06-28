@@ -1,5 +1,7 @@
 package essigautomat.cgconvert;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -209,5 +211,15 @@ public class SaveLine {
 
 	public void addGlobalPragma(String convline) {
 		globalMakros.add(convline);
+	}
+
+	public void toClipboard() {
+		if(sb == null)
+			return;
+		StringSelection stringSelection = new StringSelection(sb.toString());
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		clipboard.setContents(stringSelection, null);
+		if(m == Mode.DEBUG)
+			System.out.println("Copied contents to clipboard!");
 	}
 }
