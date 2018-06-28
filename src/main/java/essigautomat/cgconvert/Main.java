@@ -17,6 +17,10 @@ public class Main {
 	
 	@Option(name="-m", aliases="--mode", usage="converter mode: 'default', 'debug' or 'shortest'")
 	private String mode = "default";//default argument is default ... lol
+	
+	@Option(name="-c", aliases="--clipboard", usage="copy to clipboard")
+	private boolean toClipboard = false;
+	
 	public static void main(String args[])
 	{
 		new Main().doMain(args);
@@ -53,8 +57,7 @@ public class Main {
 		}
 		List<File> files = getProjectContents(inputDir);
 		CPPFileAnalyser ana = new CPPFileAnalyser(files, SaveLine.toMode(mode));
-		ana.toPath(outputDir);
-		ana.toClipboard();
+		ana.toPath(outputDir, toClipboard);
 	}
 	
 	public static List<File> getProjectContents(String projectDir)
