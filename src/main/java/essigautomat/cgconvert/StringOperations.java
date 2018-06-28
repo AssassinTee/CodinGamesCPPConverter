@@ -68,7 +68,6 @@ public class StringOperations {
 			return "";
 		String args[] = StringUtils.splitByWholeSeparator(s, "//");
 		String args2[] = StringUtils.splitByWholeSeparator(args[0], "/*");
-		System.out.println(args2[0]);
 		return args2[0];
 	}
 	
