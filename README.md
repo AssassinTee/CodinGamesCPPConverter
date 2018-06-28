@@ -29,6 +29,7 @@ java -jar target/cgconvert-YOURVERSION-jar-with-dependencies.jar
 ```
 Options (in german locale):
 ```
+ -c (--clipboard)   : copy to clipboard (Vorgabe: false)
  -i (--input) WERT  : input directory
  -m (--mode) WERT   : converter mode: 'default', 'debug' or 'shortest'
                       (Vorgabe: default)
@@ -70,4 +71,4 @@ Yes I should do that
 This project runs under GPL v3 - see the LICENSE file for details
 
 ### Acknowledgments
-Thanks to `Redstrike` for inspiring me to do this project.
+Thanks to `Redstrike` for inspiring me to do this project and testing this software.
