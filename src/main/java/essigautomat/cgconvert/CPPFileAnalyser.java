@@ -63,12 +63,10 @@ public class CPPFileAnalyser {
 
 	}
 
-	public void toPath(String outputDir) {
-		SaveLine.get().write(mode, outputDir);
-	}
-
-	public void toClipboard() {
-		// TODO Auto-generated method stub
-
+	public void toPath(String outputDir, boolean toClipboard) {
+		StringBuilder sb = null;
+		if(toClipboard)
+			sb = new StringBuilder();
+		SaveLine.get().write(mode, outputDir, sb);
 	}
 }
