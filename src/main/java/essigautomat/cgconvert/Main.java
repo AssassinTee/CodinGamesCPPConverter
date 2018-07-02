@@ -41,6 +41,7 @@ public class Main {
 		catch(CmdLineException clex)
 		{
 			System.err.println("ERROR: Unable to parse command-line options: " + clex);
+			return;
 		}
 		if(mode.equals("debug"))
 		{
