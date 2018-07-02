@@ -9,14 +9,15 @@ public class CPPFileAnalyser {
 	// Behaviour tree for line analysis
 	private List<LineBehaviour> behaviourlist;
 	private SaveLine.Mode mode;
+
 	public CPPFileAnalyser(List<File> files, SaveLine.Mode m) {
 		behaviourlist = new ArrayList<LineBehaviour>();
-		behaviourlist.add(new LineMakroInclude());//collect all includes
-		behaviourlist.add(new LineMakroConverter());//collect all converter makros
-		behaviourlist.add(new LineMakroOther());//collect other makros
-		behaviourlist.add(new LineKlassDekl());//collect all class dekl/def
-		behaviourlist.add(new LineDefault());//collect rest
-		
+		behaviourlist.add(new LineMakroInclude());// collect all includes
+		behaviourlist.add(new LineMakroConverter());// collect all converter makros
+		behaviourlist.add(new LineMakroOther());// collect other makros
+		behaviourlist.add(new LineKlassDekl());// collect all class dekl/def
+		behaviourlist.add(new LineDefault());// collect rest
+
 		mode = m;
 		// Analyse each file
 		SaveLine.get().addFileNames(files);
@@ -30,15 +31,14 @@ public class CPPFileAnalyser {
 		String mime = StringOperations.getMimeType(file.getName());
 
 		if (!mime.equals("h") && !mime.equals("cpp")) {
-			System.err.println("File '"+file.getName()+"' with mimetype '" + mime + "' is not supported!");
+			System.err.println("File '" + file.getName() + "' with mimetype '" + mime + "' is not supported!");
 			return;
 		}
 
 		InfoSubscriber info = new InfoSubscriber(mime.equals("h"));
-		//Read File
+		// Read File
 		try {
 			Scanner sc = new Scanner(file);
-
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
 				readLine(line, info);
@@ -46,13 +46,13 @@ public class CPPFileAnalyser {
 			sc.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			System.err.println("could not read File '" +file.getName() + "'");
+			System.err.println("could not read File '" + file.getName() + "'");
 		}
 	}
 
 	private void readLine(String line, InfoSubscriber info) {
 		String convline = StringOperations.normalizeSpace(line);
-		if(mode == SaveLine.Mode.SHORTEST)
+		if (mode == SaveLine.Mode.SHORTEST)
 			convline = StringOperations.removeSingleComment(convline);
 		for (LineBehaviour lb : behaviourlist) {
 			if (lb.isPossible(line, convline, info)) {
@@ -60,18 +60,18 @@ public class CPPFileAnalyser {
 					break;
 			}
 		}
-
 	}
 
 	public void toPath(String outputDir, boolean toClipboard) {
 		StringBuilder sb = null;
-		if(toClipboard)
+		if (toClipboard || mode == SaveLine.Mode.SHORTEST)
 			sb = new StringBuilder();
 		SaveLine.get().write(mode, outputDir, sb);
+		if (mode == SaveLine.Mode.SHORTEST)
+			SaveLine.get().writeStringToFile(outputDir, StringOperations.removeMethodSpaces(StringOperations.removeAllComments(sb.toString())));
 	}
 
 	public void toClipboard() {
 		SaveLine.get().toClipboard();
-		
 	}
 }
