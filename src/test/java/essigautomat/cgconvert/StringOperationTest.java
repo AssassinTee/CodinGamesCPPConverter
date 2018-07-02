@@ -52,4 +52,24 @@ public class StringOperationTest {
 		assertTrue(StringOperations.removeComment("A// bullshit */").equals("A"));
 		assertTrue(StringOperations.removeComment("A").equals("A"));
 	}
+	
+	@Test
+	public void removeAllComments()
+	{
+		String test1 = "int a;//test"+'\n'+"int b;//test";
+		assertTrue(StringOperations.removeAllComments(test1).equals("int a;\nint b;"));
+		String test2 = "int a;/* test\n test \n test*/int b;";
+		assertTrue(StringOperations.removeAllComments(test2).equals("int a;int b;"));
+	}
+	
+	@Test
+	public void removeMethodSpaces()
+	{
+		String test1 = "int method() {\ntest;";
+		String test2 = "int method()\n{\ntest;";
+		//System.out.println(StringOperations.removeMethodSpaces(test1));
+		//System.out.println(StringOperations.removeMethodSpaces(test2));
+		assertTrue(StringOperations.removeMethodSpaces(test1).equals("int method(){\ntest;"));
+		assertTrue(StringOperations.removeMethodSpaces(test2).equals("int method(){\ntest;"));
+	}
 }
