@@ -1,5 +1,5 @@
-#include <iostream>
-#include "A.h"
+#include <iostream>/*cout*/
+#include "A.h"/*test*/
 #include "B.h"
 
 int main(int argc, const char* stuff[])
